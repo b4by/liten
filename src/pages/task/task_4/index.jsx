@@ -35,6 +35,7 @@ import useRatio from "../../../hooks/useRatio";
 import Xarrow, { useXarrow, Xwrapper } from "react-xarrows";
 import Draggable from "react-draggable";
 import throttle from "lodash.throttle";
+import { useHistory } from "react-router";
 
 function freqFromX(coordX, width) {
   return (coordX / width) * 250 + 250;
@@ -72,6 +73,7 @@ let synth = new Tone.MonoSynth({
 }).toDestination();
 
 export const Task4 = () => {
+  const history = useHistory();
   const box1Ref = useRef(null);
   const container = useRef(null);
   const [hidden, setHidden] = useState(false);
@@ -82,7 +84,7 @@ export const Task4 = () => {
   useEffect(() => {
     // TODO FINAL
     if (pointerNote === "5") {
-      console.log("END LEVEL");
+      history.push("/task/5");
     }
   }, [pointerNote]);
 
