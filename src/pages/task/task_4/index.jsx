@@ -84,9 +84,10 @@ export const Task4 = () => {
   useEffect(() => {
     // TODO FINAL
     if (pointerNote === "5") {
+      synth.triggerRelease();
       history.push("/task/5");
     }
-  }, [pointerNote]);
+  }, [history, pointerNote]);
 
   const onGotPointerCapture = useCallback(
     (e) => {
@@ -108,9 +109,11 @@ export const Task4 = () => {
 
   const touchstart = (event) => {
     Tone.context.resume();
-    let t0 = event?.touches?.item(0) ?? event;
-    let freq = freqFromX(t0.clientX, container.current.clientWidth);
-    synth.triggerAttack(freq);
+    if (container.current) {
+      let t0 = event?.touches?.item(0) ?? event;
+      let freq = freqFromX(t0.clientX, container.current.clientWidth);
+      synth.triggerAttack(freq);
+    }
   };
 
   const touchend = (event) => {
@@ -120,9 +123,11 @@ export const Task4 = () => {
   };
 
   const touchmove = (event) => {
-    let t0 = event?.touches?.item(0) ?? event;
-    let freq = freqFromX(t0.clientX, container.current.clientWidth);
-    synth.setNote(freq);
+    if (container.current) {
+      let t0 = event?.touches?.item(0) ?? event;
+      let freq = freqFromX(t0.clientX, container.current.clientWidth);
+      synth.setNote(freq);
+    }
   };
 
   return (

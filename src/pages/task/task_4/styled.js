@@ -232,7 +232,7 @@ export const StyledCircles5 = styled.div`
 `;
 
 export const Container = styled.div`
-  width: 275px;
+  width: 360px;
 
   ${breakpoints.onlyTablet} {
     width: 1173px;
