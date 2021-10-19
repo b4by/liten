@@ -37,9 +37,13 @@ const tracks = [
 
 export const Task5 = observer(() => {
   const { game } = useStore();
-  const audioRef = useRef(null);
+  const itemsRef = useRef([]);
   const history = useHistory();
   const [playing, setPlaying] = useState({});
+
+  useEffect(() => {
+    itemsRef.current = itemsRef.current.slice(0, tracks.length);
+  }, []);
 
   useEffect(() => {}, []);
   return (
@@ -47,7 +51,7 @@ export const Task5 = observer(() => {
       <MusicToggle />
       <StyledTaskContent>
         <StyledTaskList>
-          {tracks.map((item) => {
+          {tracks.map((item, i) => {
             return (
               <StyledTaskItem key={item.id}>
                 <StyledTaskButton
@@ -61,9 +65,15 @@ export const Task5 = observer(() => {
                 <StyledTaskPlayButton
                   playing={playing === item.id}
                   onClick={() => {
-                    setPlaying({ ...playing, playing: item.id });
+                    setPlaying(item.id);
+                    itemsRef.current.forEach((item) => {
+                      item.pause();
+                    });
                     if (playing === item.id) {
-                      audioRef.current.play();
+                      itemsRef.current[i].pause();
+                      setPlaying(null);
+                    } else {
+                      itemsRef.current[i].play();
                     }
                   }}
                 />
@@ -71,7 +81,7 @@ export const Task5 = observer(() => {
                   src={item.src}
                   controls
                   volume="0.1"
-                  ref={audioRef}
+                  ref={(el) => (itemsRef.current[i] = el)}
                 />
               </StyledTaskItem>
             );
