@@ -6,7 +6,7 @@ import imgMobileBg from "../../assets/img/screen-1__mobile@2x.jpg";
 import imgTabletBg from "../../assets/img/screen-1__tablet@2x.jpg";
 import imgDesktopBg from "../../assets/img/screen-1__desktop@2x.jpg";
 import { Button } from "../../components/UI/button";
-import Logo from "../../assets/svg/logo.svg";
+import Logo from "../../assets/svg/szb-logo-white.svg";
 import { breakpoints } from "../../helpers/breakpoints";
 
 export const StyledHomeContainer = styled.div`
@@ -241,6 +241,8 @@ export const StyledSberLogo = styled.img.attrs({
   src: `${Logo}`,
 })`
   position: absolute;
+  width: 88px;
+  height: 29px;
   bottom: 28px;
   right: 31px;
   ${breakpoints.onlyTablet} {
@@ -253,7 +255,7 @@ export const StyledSberLogo = styled.img.attrs({
   ${breakpoints.onlyDesktop} {
     width: 240px;
     height: 79px;
-    top: auto;
+    top: unset;
     bottom: 94px;
     right: 84px;
   }
