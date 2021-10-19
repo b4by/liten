@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Redirect } from "react-router";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 import { Home } from "./pages/home";
 import { Info } from "./pages/info";
 import { Info1 } from "./pages/info/info_1";
@@ -23,68 +25,70 @@ function App() {
   const { game } = useStore();
   return (
     <>
-      <Music />
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/start">
-            <Start />
-          </Route>
-          <Route exact path="/info/1">
-            <Info>
-              <Info1 />
-            </Info>
-          </Route>
-          <Route exact path="/info/2">
-            <Info>
-              <Info2 />
-            </Info>
-          </Route>
-          <Route exact path="/info/3">
-            <Info>
-              <Info3 />
-            </Info>
-          </Route>
-          <Route exact path="/info/4">
-            <Info>
-              <Info4 />
-            </Info>
-          </Route>
-          <Route exact path="/info/5">
-            <Info>
-              <Info5 />
-            </Info>
-          </Route>
-          <Route exact path="/task/1/:id">
-            <Task1 />
-          </Route>
-          <Route exact path="/task/2">
-            <Task>
-              <Task2 />
-            </Task>
-          </Route>
-          <Route exact path="/task/3">
-            <Task>
-              <Task3 />
-            </Task>
-          </Route>
-          <Route exact path="/task/4">
-            <Task4 />
-          </Route>
-          <Route exact path="/task/5">
-            <Task5 />
-          </Route>
-          <Route exact path="/submit">
-            <Submit />
-          </Route>
-          <Route exact path="/shares">
-            <Share />
-          </Route>
-          <Redirect to="/" />
-        </Switch>
-      </Router>
+      <DndProvider backend={HTML5Backend}>
+        <Music />
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/start">
+              <Start />
+            </Route>
+            <Route exact path="/info/1">
+              <Info>
+                <Info1 />
+              </Info>
+            </Route>
+            <Route exact path="/info/2">
+              <Info>
+                <Info2 />
+              </Info>
+            </Route>
+            <Route exact path="/info/3">
+              <Info>
+                <Info3 />
+              </Info>
+            </Route>
+            <Route exact path="/info/4">
+              <Info>
+                <Info4 />
+              </Info>
+            </Route>
+            <Route exact path="/info/5">
+              <Info>
+                <Info5 />
+              </Info>
+            </Route>
+            <Route exact path="/task/1/:id">
+              <Task1 />
+            </Route>
+            <Route exact path="/task/2">
+              <Task>
+                <Task2 />
+              </Task>
+            </Route>
+            <Route exact path="/task/3">
+              <Task>
+                <Task3 />
+              </Task>
+            </Route>
+            <Route exact path="/task/4">
+              <Task4 />
+            </Route>
+            <Route exact path="/task/5">
+              <Task5 />
+            </Route>
+            <Route exact path="/submit">
+              <Submit />
+            </Route>
+            <Route exact path="/shares">
+              <Share />
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+        </Router>
+      </DndProvider>
     </>
   );
 }
