@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { useStore } from "../../../store";
 import {
   StyledLevelContainer,
@@ -19,10 +19,14 @@ import playImg from "../../../assets/svg/play.svg";
 import { WaveSurferComponent } from "../../../components/WaveSurferComponent";
 import { useHistory } from "react-router";
 import { MusicToggle } from "../../../components/MusicToggle";
+import answerRightMp3 from "../../../assets/audio/answer_right.mp3";
+import answerFalseMp3 from "../../../assets/audio/answer_false.mp3";
 
 export const Task1 = observer(({}) => {
   const { game } = useStore();
   const history = useHistory();
+  const [rightAudio] = useState(new Audio(answerRightMp3));
+  const [falseAudio] = useState(new Audio(answerFalseMp3));
   const [hidden, setHidden] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [animate, setAnimate] = useState(false);
@@ -58,7 +62,7 @@ export const Task1 = observer(({}) => {
                 <span></span>
                 <span></span>
                 <StyledLevelVinylImg
-                  src={game.musicQuestions[level].img}
+                  src={game.musicQuestions[level]?.img}
                   started={game.musicPlaying}
                 />
                 <span></span>
@@ -74,18 +78,21 @@ export const Task1 = observer(({}) => {
                         setAnimate(true);
                         if (game.currentLevel === 0 && item === "латина") {
                           setIsCorrectAnswer(true);
+                          rightAudio.play();
                           game.goToNextLevel();
                           game.playOrPause(false);
                           history.push(`/task/1/${game.currentLevel + 1}`);
                         }
                         if (game.currentLevel === 1 && item === "кантри") {
                           setIsCorrectAnswer(true);
+                          rightAudio.play();
                           game.goToNextLevel();
                           game.playOrPause(false);
                           history.push(`/task/1/${game.currentLevel + 1}`);
                         }
                         if (game.currentLevel === 2 && item === "фолк") {
                           setIsCorrectAnswer(true);
+                          rightAudio.play();
                           setTimeout(() => {
                             game.goToNextLevel();
                             game.playOrPause(false);

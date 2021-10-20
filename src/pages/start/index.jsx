@@ -17,6 +17,7 @@ import { MusicToggle } from "../../components/MusicToggle";
 import { useStore } from "../../store";
 import { observer } from "mobx-react";
 import { useEffect } from "react";
+import { SoundClick } from "../../components/sound-click";
 
 export const Start = observer(() => {
   const { game } = useStore();

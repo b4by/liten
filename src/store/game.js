@@ -55,7 +55,7 @@ const task2 = [
     music: [
       {
         id: 0,
-        url: trackCaffeMp3,
+        url: trackSportMp3,
       },
       {
         id: 1,
@@ -63,7 +63,7 @@ const task2 = [
       },
       {
         id: 2,
-        url: trackAdd1Mp3,
+        url: trackAdd3Mp3,
       },
     ],
     correctMusic: 1,
@@ -79,11 +79,11 @@ const task2 = [
       },
       {
         id: 1,
-        url: trackAdd2Mp3,
+        url: trackAdd1Mp3,
       },
       {
         id: 2,
-        url: trackBeautyMp3,
+        url: trackCaffeMp3,
       },
     ],
     correctMusic: 0,
@@ -95,11 +95,11 @@ const task2 = [
     music: [
       {
         id: 0,
-        url: trackBeautyMp3,
+        url: trackAdd2Mp3,
       },
       {
         id: 1,
-        url: trackAdd3Mp3,
+        url: trackAdd1Mp3,
       },
       {
         id: 2,

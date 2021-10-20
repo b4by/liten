@@ -1,4 +1,7 @@
 import styled, { css } from "styled-components";
+import playSvg from "../../../assets/svg/play-btn.svg";
+import pauseSvg from "../../../assets/svg/pause-btn.svg";
+import waveSvg from "../../../assets/svg/wave.svg";
 import playIconImg from "../../../assets/img/play-icon@2x.png";
 import playIconImg1 from "../../../assets/img/play-icon_1@2x.png";
 import playIconImg2 from "../../../assets/img/play-icon_2@2x.png";
@@ -115,6 +118,7 @@ export const StyledTask = styled.div`
 `;
 
 export const StyledCirclesWrapper = styled.div`
+  pointer-events: ${({ loaded }) => (loaded ? "auto" : "none")};
   position: relative;
   overflow: hidden;
   width: 360px;
@@ -246,13 +250,131 @@ export const Wrapper = styled.div``;
 
 export const StyledTaskBg = styled.div``;
 
+export const StyledTaskTextDescMobile = styled.div`
+  padding: 0 16px;
+  padding-top: 180px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  ${(props) => (props.hidden ? "display: none;" : "display: flex;")}
+  color: #fff;
+  font-size: 30px;
+  line-height: 112.63%;
+  text-align: center;
+  color: #ffffff;
+  background: rgba(7, 7, 13, 0.6);
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  p:first-of-type {
+    display: flex;
+    align-items: center;
+  }
+  ${breakpoints.onlyMobile} {
+    display: flex;
+  }
+  ${breakpoints.onlyTablet} {
+    display: none;
+  }
+  ${breakpoints.onlyDesktop} {
+    display: none;
+  }
+`;
+
+export const StyledTaskTextDescTablet = styled.div`
+  padding: 0 16px;
+  padding-top: 259px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  ${(props) => (props.hidden ? "display: none;" : "display: flex;")}
+  color: #fff;
+  font-size: 40px;
+  line-height: 112.63%;
+  text-align: center;
+  color: #ffffff;
+  background: rgba(7, 7, 13, 0.6);
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  p:first-of-type {
+    display: flex;
+    align-items: center;
+  }
+  ${breakpoints.onlyMobile} {
+    display: none;
+  }
+  ${breakpoints.onlyTablet} {
+    display: flex;
+  }
+  ${breakpoints.onlyDesktop} {
+    display: none;
+  }
+`;
+
+export const StyledTaskTextDescDesktop = styled.div`
+  padding: 0 16px;
+  padding-top: 380px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  ${(props) => (props.hidden ? "display: none;" : "display: flex;")}
+  color: #fff;
+  font-size: 50px;
+  line-height: 112.63%;
+  text-align: center;
+  color: #ffffff;
+  background: rgba(7, 7, 13, 0.6);
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  p:first-of-type {
+    display: flex;
+    align-items: center;
+  }
+  ${breakpoints.onlyMobile} {
+    display: none;
+  }
+  ${breakpoints.onlyTablet} {
+    display: none;
+  }
+  ${breakpoints.onlyDesktop} {
+    display: flex;
+  }
+`;
+
+export const StyledTaskDescContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 325px;
+  font-size: 30px;
+  margin: 0 auto;
+  line-height: 112.63%;
+  ${breakpoints.onlyMobile} {
+  }
+  ${breakpoints.onlyTablet} {
+    width: 689px;
+    font-size: 40px;
+  }
+  ${breakpoints.onlyDesktop} {
+    font-size: 50px;
+    width: 1165px;
+  }
+`;
+
 export const StyledTaskTextDesc = styled.div`
   padding: 0 16px;
   position: absolute;
   top: 0;
   left: 0;
   ${(props) => (props.hidden ? "display: none;" : "display: flex;")}
-  flex-direction: column;
   color: #fff;
   font-size: 30px;
   line-height: 112.63%;
@@ -264,40 +386,6 @@ export const StyledTaskTextDesc = styled.div`
   width: 100%;
   height: 100%;
   z-index: 20;
-  p {
-    ${breakpoints.onlyTablet} {
-      max-width: 689px;
-    }
-    ${breakpoints.onlyDesktop} {
-      max-width: 850px;
-    }
-  }
-  p:first-of-type {
-    display: flex;
-    align-items: center;
-    ${breakpoints.onlyTablet} {
-    }
-    ${breakpoints.onlyDesktop} {
-    }
-  }
-  p:nth-of-type(2) {
-    ${breakpoints.onlyTablet} {
-    }
-    ${breakpoints.onlyDesktop} {
-    }
-  }
-  p:last-of-type {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    margin-bottom: 44px;
-  }
-  ${breakpoints.onlyTablet} {
-    font-size: 40px;
-  }
-  ${breakpoints.onlyDesktop} {
-    font-size: 50px;
-  }
 `;
 
 export const StyledTaskDescButton = styled(Button)`
@@ -317,17 +405,92 @@ export const StyledTaskDescButton = styled(Button)`
     background: none;
     color: inherit;
   }
+  ${breakpoints.onlyMobile} {
+    margin-top: 105px;
+  }
   ${breakpoints.onlyTablet} {
+    margin-top: 124px;
     font-size: 30px;
     width: 468px;
+    border: 5px solid #ffffff;
     height: 82px;
   }
   ${breakpoints.onlyDesktop} {
     font-size: 50px;
+    border: 5px solid #ffffff;
+    margin-top: 257px;
     width: 743px;
     height: 135px;
   }
 `;
+
+export const StyledTaskDescButtonMobile = styled(Button)`
+  text-transform: uppercase;
+  width: 325px;
+  height: 59px;
+  border-radius: 13px;
+  border: 2px solid #ffffff;
+  color: #fff;
+  font-size: 17px;
+  line-height: 112.63%;
+  background: transparent;
+  font-weight: bold;
+  margin-top: 88px;
+  ${breakpoints.onlyMobile} {
+    display: block;
+  }
+  ${breakpoints.onlyTablet} {
+    display: none;
+  }
+  ${breakpoints.onlyDesktop} {
+    display: none;
+  }
+`;
+
+export const StyledTaskDescButtonTablet = styled(Button)`
+  margin-top: 122px;
+  text-transform: uppercase;
+  border-radius: 13px;
+  font-size: 30px;
+  line-height: 112.63%;
+  width: 485px;
+  height: 101px;
+  padding: 6px 0;
+  border: 5px solid #ffffff;
+  background: transparent;
+  ${breakpoints.onlyMobile} {
+    display: none;
+  }
+  ${breakpoints.onlyTablet} {
+    display: block;
+  }
+  ${breakpoints.onlyDesktop} {
+    display: none;
+  }
+`;
+
+export const StyledTaskDescButtonDesktop = styled(Button)`
+  margin-top: 163px;
+  border: 5px solid #ffffff;
+  text-transform: uppercase;
+  border-radius: 13px;
+  width: 743.64px;
+  height: 135px;
+  font-size: 40px;
+  line-height: 112.63%;
+  background: transparent;
+  ${breakpoints.onlyMobile} {
+    display: none;
+  }
+  ${breakpoints.onlyTablet} {
+    display: none;
+  }
+  ${breakpoints.onlyDesktop} {
+    display: block;
+  }
+`;
+
+export const StyledTaskTextDesc2 = styled.div``;
 
 export const StyledTaskContainer = styled.div`
   display: flex;
@@ -343,6 +506,16 @@ export const StyledTaskCircles = styled.div`
 export const StyledTaskPlayIcon = styled.img`
   width: 39px;
   margin-left: 16px;
+  ${breakpoints.onlyTablet} {
+    width: 61px;
+    height: 62.97px;
+    margin-left: 25px;
+  }
+  ${breakpoints.onlyDesktop} {
+    width: 102px;
+    height: 105.29px;
+    margin-left: 25px;
+  }
 `;
 
 export const WrapperPlay = styled.div`
@@ -481,4 +654,103 @@ export const StyledThereminContainer = styled.div`
 
 export const StyledThereminNote = styled.div`
   flex-basis: 25%;
+`;
+
+export const Wrapper2 = styled.div`
+  ${(props) => (props.show ? "display: block;" : "display: none;")}
+`;
+
+export const StyledTaskTextMobile = styled.div`
+  margin-bottom: 36px;
+  ${breakpoints.onlyMobile} {
+    display: block;
+  }
+  ${breakpoints.onlyTablet} {
+    display: none;
+  }
+  ${breakpoints.onlyDesktop} {
+    display: none;
+  }
+`;
+
+export const StyledTaskTextTablet = styled.div`
+  font-size: 40px;
+  line-height: 112.63%;
+  margin-bottom: 83px;
+  ${breakpoints.onlyMobile} {
+    display: none;
+  }
+  ${breakpoints.onlyTablet} {
+    display: block;
+  }
+  ${breakpoints.onlyDesktop} {
+    display: none;
+  }
+`;
+
+export const StyledTaskTextDesktop = styled.div`
+  font-size: 50px;
+  margin-bottom: 72px;
+  line-height: 112.63%;
+  ${breakpoints.onlyMobile} {
+    display: none;
+  }
+  ${breakpoints.onlyTablet} {
+    display: none;
+  }
+  ${breakpoints.onlyDesktop} {
+    display: block;
+  }
+`;
+
+export const StyledTaskTextContainer = styled.div`
+  width: 325px;
+`;
+
+export const StyledTaskAudio = styled.audio`
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+`;
+
+export const StyledPlaySvgIcon = styled.div`
+  width: 33px;
+  height: 33px;
+  background-image: url(${(props) => (!props.playing ? playSvg : pauseSvg)});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  margin-right: 16px;
+  ${breakpoints.onlyTablet} {
+    width: 53px;
+    height: 53px;
+  }
+  ${breakpoints.onlyDesktop} {
+    width: 80px;
+    height: 80px;
+  }
+`;
+
+export const StyledTaskAudioPlayer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const StyledWaveSvg = styled.img.attrs({
+  src: waveSvg,
+})`
+  width: 237px;
+  height: 43px;
+  ${breakpoints.onlyTablet} {
+    width: 381.42px;
+    height: 68.96px;
+  }
+  ${breakpoints.onlyDesktop} {
+    width: 569px;
+    height: 103px;
+  }
 `;

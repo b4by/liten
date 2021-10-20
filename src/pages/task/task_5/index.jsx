@@ -1,5 +1,9 @@
 import { MusicToggle } from "../../../components/MusicToggle";
+import LitenAnimationInfo4 from "../../../assets/animation/liten_info_3.json";
 import {
+  StyledLottieContainer,
+  StyledLitenLottie,
+  StyledCircles,
   StyledTask,
   StyledTaskContent,
   StyledTaskList,
@@ -48,6 +52,14 @@ export const Task5 = observer(() => {
   useEffect(() => {}, []);
   return (
     <StyledTask>
+      <StyledLottieContainer>
+        <StyledLitenLottie animationData={LitenAnimationInfo4} />
+      </StyledLottieContainer>
+      <StyledCircles>
+        <div></div>
+        <div></div>
+        <div></div>
+      </StyledCircles>
       <MusicToggle />
       <StyledTaskContent>
         <StyledTaskList>

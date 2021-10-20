@@ -10,8 +10,14 @@ import LitenAnimationScreen2 from "../../../assets/animation/liten_screen_2.json
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { MusicToggle } from "../../../components/MusicToggle/index.jsx";
+import iHappyMp3 from "../../../assets/audio/l_happy.mp3";
+import { useEffect, useState } from "react";
 
 export const Info1 = () => {
+  const [audio] = useState(new Audio(iHappyMp3));
+  useEffect(() => {
+    audio.play();
+  }, []);
   const history = useHistory();
 
   return (

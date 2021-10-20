@@ -17,6 +17,7 @@ import {
   StyledHomeButton,
   StyledSberLogo,
 } from "./styled";
+import { SoundClick } from "../../components/sound-click";
 
 export const Home = observer(() => {
   const history = useHistory();
@@ -78,7 +79,6 @@ export const Home = observer(() => {
             </StyledTextDesktop>
           </StyledTextContainer>
           <StyledHomeButton
-            type="click"
             onClick={() => {
               history.push("/start");
               game.start();

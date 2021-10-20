@@ -18,15 +18,20 @@ import { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useStore } from "../../../store";
 import { MusicToggle } from "../../../components/MusicToggle";
+import lSadMp3 from "../../../assets/audio/l_sad.mp3";
+import r2Mp3 from "../../../assets/audio/r2.mp3";
 
 export const Info4 = observer(() => {
   const [hidden, setHidden] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
+  const [audio] = useState(new Audio(lSadMp3));
+  const [r2audio] = useState(new Audio(r2Mp3));
   const { game } = useStore();
   const history = useHistory();
 
   useEffect(() => {
     game.changeBgMusic("bgthMusic");
+    audio.play();
   }, []);
 
   return (
@@ -51,7 +56,13 @@ export const Info4 = observer(() => {
             setShowBubble(true);
           }}
         >
-          <StyledInfoBubbleText>!</StyledInfoBubbleText>
+          <StyledInfoBubbleText
+            onClick={() => {
+              r2audio.play();
+            }}
+          >
+            !
+          </StyledInfoBubbleText>
         </StyledInfoBubble>
         <StyledLitenLottie animationData={LitenAnimationInfo4} />
       </StyledLitenContainer>

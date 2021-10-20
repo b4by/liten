@@ -3,7 +3,7 @@ import over_button from "../../assets/audio/over_button.mp3";
 import click_button from "../../assets/audio/click_button.mp3";
 import cool_button from "../../assets/audio/cool_button.mp3";
 import { observer } from "mobx-react-lite";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useStore } from "../../store";
 
 const Wrapper = styled.div`
@@ -26,19 +26,27 @@ export const SoundClick = observer(({ type, children }) => {
   const musicRef = useRef(null);
   const { game } = useStore();
 
+  useEffect(() => {
+    const volume = game.musicIsMuted ? 0 : 0.1;
+    if (musicRef.current) {
+      musicRef.current.volume = volume;
+      musicRef.current.muted = game.musicIsMuted;
+    }
+  });
+
   return (
-    <>
-      <Wrapper
-        onClick={() => setClicked(true)}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => {
-          setClicked(false);
-          setHovered(false);
-        }}
-      >
+    <div
+      onClick={() => setClicked(true)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => {
+        setClicked(false);
+        setHovered(false);
+      }}
+    >
+      <Wrapper>
         {clicked && (
           <audio
-            src={click_button}
+            src={!type ? click_button : cool_button}
             controls
             autoPlay
             volume="0.1"
@@ -58,6 +66,6 @@ export const SoundClick = observer(({ type, children }) => {
         )}
       </Wrapper>
       {children}
-    </>
+    </div>
   );
 });

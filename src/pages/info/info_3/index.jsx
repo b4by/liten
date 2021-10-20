@@ -11,9 +11,16 @@ import {
 } from "./styled";
 import LitenAnimationInfo3 from "../../../assets/animation/liten_info_3.json";
 import { MusicToggle } from "../../../components/MusicToggle";
+import r1Mp3 from "../../../assets/audio/r1.mp3";
+import { useEffect, useState } from "react";
 
 export const Info3 = () => {
+  const [audio] = useState(new Audio(r1Mp3));
   const history = useHistory();
+
+  useEffect(() => {
+    audio.play();
+  }, []);
   return (
     <>
       <MusicToggle />

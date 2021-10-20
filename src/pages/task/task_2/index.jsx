@@ -92,10 +92,8 @@ export const Task2 = observer(() => {
               }
               if (currentTask === 2 && checked.checkedTrackId === 2) {
                 setIsCorrectAnswer(true);
-                setTimeout(() => {
-                  setCurrentTask((prev) => prev + 1);
-                  history.push("/info/2");
-                }, 600);
+                setCurrentTask((prev) => prev + 1);
+                history.push("/info/2");
               }
             }}
           >

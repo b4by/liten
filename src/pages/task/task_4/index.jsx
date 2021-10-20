@@ -1,5 +1,15 @@
 import { StyledCircles } from "../../info/info_1/styled";
 import {
+  StyledTaskAudio,
+  StyledTaskAudioPlayer,
+  StyledPlaySvgIcon,
+  StyledWaveSvg,
+  StyledTaskTextMobile,
+  StyledTaskTextTablet,
+  StyledTaskTextDesktop,
+  StyledTaskDescButtonMobile,
+  StyledTaskDescButtonTablet,
+  StyledTaskDescButtonDesktop,
   StyledTaskCursorCircle,
   StyledCirclesWrapper,
   StyledCircles1,
@@ -10,10 +20,15 @@ import {
   StyledTask,
   Wrapper,
   StyledTaskTextDesc,
+  StyledTaskTextDescMobile,
+  StyledTaskTextDescTablet,
+  StyledTaskTextDescDesktop,
+  StyledTaskDescContainer,
   StyledTaskDescButton,
   StyledTaskContainer,
   StyledTaskPlayIcon,
   StyledTaskPlayIconImg,
+  StyledTaskTextContainer,
   StyledTaskPlayIconImg1,
   StyledTaskPlayIconImg2,
   StyledTaskPlayIconImg3,
@@ -21,21 +36,24 @@ import {
   StyledTaskPlayIconImg5,
   StyledThereminContainer,
   StyledThereminNote,
+  StyledTaskTextDesc2,
+  StyledTaskDescButton2,
   WrapperPlay1,
   WrapperPlay2,
   WrapperPlay3,
   WrapperPlay4,
   WrapperPlay5,
   Container,
+  Wrapper2,
 } from "./styled";
 import * as Tone from "tone";
 import { useEffect, useRef, useState, useCallback, forwardRef } from "react";
 import playIconImg from "../../../assets/img/play-icon@2x.png";
-import useRatio from "../../../hooks/useRatio";
 import Xarrow, { useXarrow, Xwrapper } from "react-xarrows";
 import Draggable from "react-draggable";
 import throttle from "lodash.throttle";
 import { useHistory } from "react-router";
+import thereminMp3 from "../../../assets/audio/theremin.mp3";
 
 function freqFromX(coordX, width) {
   return (coordX / width) * 250 + 250;
@@ -74,19 +92,26 @@ let synth = new Tone.MonoSynth({
 
 export const Task4 = () => {
   const history = useHistory();
+  const musicRef = useRef(null);
   const box1Ref = useRef(null);
   const container = useRef(null);
   const [hidden, setHidden] = useState(false);
   const [pointerNote, setPointerNote] = useState("1");
   const [keyDrag, setKeyDrag] = useState("_drag");
-  const ratio = useRatio();
+  const [show, setShow] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     // TODO FINAL
     if (pointerNote === "5") {
       synth.triggerRelease();
-      history.push("/task/5");
+      setShow(true);
+      setLoaded(false);
     }
+    musicRef.current.addEventListener("ended", () => {
+      setPlaying(false);
+    });
   }, [history, pointerNote]);
 
   const onGotPointerCapture = useCallback(
@@ -142,7 +167,7 @@ export const Task4 = () => {
           onPointerUp={throttle(touchend, 200)}
           onMouseMove={throttle(touchmove, 200)}
         >
-          <StyledCirclesWrapper>
+          <StyledCirclesWrapper loaded={loaded}>
             <StyledCircles1 />
             <StyledCircles2 />
             <StyledCircles3 />
@@ -213,6 +238,7 @@ export const Task4 = () => {
                 color="#fff"
                 showHead={false}
                 key={keyDrag}
+                path="straight"
               />
             )}
             {pointerNote >= "2" && (
@@ -222,6 +248,7 @@ export const Task4 = () => {
                 strokeWidth="2"
                 color="#fff"
                 showHead={false}
+                path="straight"
               />
             )}
             {pointerNote >= "3" && (
@@ -231,6 +258,7 @@ export const Task4 = () => {
                 strokeWidth="2"
                 color="#fff"
                 showHead={false}
+                path="straight"
               />
             )}
             {pointerNote >= "4" && (
@@ -240,6 +268,7 @@ export const Task4 = () => {
                 strokeWidth="2"
                 color="#fff"
                 showHead={false}
+                path="straight"
               />
             )}
             {pointerNote >= "5" && (
@@ -249,6 +278,7 @@ export const Task4 = () => {
                 strokeWidth="2"
                 color="#fff"
                 showHead={false}
+                path="straight"
               />
             )}
             <div id="theremin-container">
@@ -262,23 +292,135 @@ export const Task4 = () => {
             </div>
           </StyledCirclesWrapper>
           <Wrapper hidden={hidden}>
-            <StyledTaskTextDesc onClick={() => setHidden(true)} hidden={hidden}>
-              <p>
-                Соедини <StyledTaskPlayIcon src={playIconImg} />
-              </p>
-              <p>в сплошную линию</p>
-              <p>чтобы получилась</p>
-              <p>
-                <strong>мелодия</strong>
-              </p>
-              <StyledTaskDescButton onClick={() => setHidden(true)}>
-                Вперёд!
-              </StyledTaskDescButton>
-            </StyledTaskTextDesc>
+            <StyledTaskTextDescMobile
+              onClick={() => {
+                setLoaded(true);
+                setHidden(true);
+              }}
+              hidden={hidden}
+            >
+              <StyledTaskDescContainer>
+                <p>
+                  Соедини <StyledTaskPlayIcon src={playIconImg} />
+                </p>
+                <p>в сплошную линию</p>
+                <p>чтобы получилась</p>
+                <p>
+                  <strong>мелодия</strong>
+                </p>
+                <StyledTaskDescButton onClick={() => setHidden(true)}>
+                  Вперёд!
+                </StyledTaskDescButton>
+              </StyledTaskDescContainer>
+            </StyledTaskTextDescMobile>
+            <StyledTaskTextDescTablet
+              onClick={() => {
+                setLoaded(true);
+                setHidden(true);
+              }}
+              hidden={hidden}
+            >
+              <StyledTaskDescContainer>
+                <p>
+                  Соедини <StyledTaskPlayIcon src={playIconImg} />
+                </p>
+                <p>в сплошную линию, чтобы</p>
+                <p>
+                  получилась <strong>мелодия</strong>
+                </p>
+                <StyledTaskDescButton onClick={() => setHidden(true)}>
+                  Вперёд!
+                </StyledTaskDescButton>
+              </StyledTaskDescContainer>
+            </StyledTaskTextDescTablet>
+            <StyledTaskTextDescDesktop
+              onClick={() => {
+                setLoaded(true);
+                setHidden(true);
+              }}
+              hidden={hidden}
+            >
+              <StyledTaskDescContainer>
+                <p>
+                  Соедини <StyledTaskPlayIcon src={playIconImg} />
+                </p>
+                <p>
+                  в сплошную линию, чтобы получилась <strong>мелодия</strong>
+                </p>
+                <StyledTaskDescButton onClick={() => setHidden(true)}>
+                  Вперёд!
+                </StyledTaskDescButton>
+              </StyledTaskDescContainer>
+            </StyledTaskTextDescDesktop>
             <StyledTaskContainer>
               <StyledThereminContainer></StyledThereminContainer>
             </StyledTaskContainer>
           </Wrapper>
+          <Wrapper2 show={show}>
+            <StyledTaskTextDesc show={show}>
+              <StyledTaskDescContainer>
+                <StyledTaskTextMobile>
+                  Ото повезло,
+                  <br /> что вы ей помогаете!
+                  <br /> Хотите послушать,
+                  <br /> что получилось?
+                </StyledTaskTextMobile>
+                <StyledTaskTextTablet>
+                  Ото повезло, что вы ей помогаете!
+                  <br />
+                  Хотите послушать, что получилось?
+                </StyledTaskTextTablet>
+                <StyledTaskTextDesktop>
+                  Ото повезло, что вы ей помогаете!
+                  <br />
+                  Хотите послушать, что получилось?
+                </StyledTaskTextDesktop>
+                <StyledTaskAudioPlayer>
+                  <StyledPlaySvgIcon
+                    playing={playing}
+                    onClick={() => {
+                      if (playing === false) {
+                        setPlaying(true);
+                        musicRef.current.play();
+                      } else {
+                        setPlaying(false);
+                        musicRef.current.pause();
+                      }
+                    }}
+                  />
+                  <StyledWaveSvg />
+                </StyledTaskAudioPlayer>
+                <StyledTaskAudio
+                  src={thereminMp3}
+                  controls
+                  volume="0.1"
+                  ref={musicRef}
+                />
+                <StyledTaskDescButtonMobile
+                  type="cool_button"
+                  onClick={() => history.push("/task/5")}
+                >
+                  А теперь с аранжировкой!
+                </StyledTaskDescButtonMobile>
+                <StyledTaskDescButtonTablet
+                  type="cool_button"
+                  onClick={() => history.push("/task/5")}
+                >
+                  А теперь
+                  <br />с аранжировкой!
+                </StyledTaskDescButtonTablet>
+                <StyledTaskDescButtonDesktop
+                  type="cool_button"
+                  onClick={() => history.push("/task/5")}
+                >
+                  А теперь с аранжировкой!
+                </StyledTaskDescButtonDesktop>
+              </StyledTaskDescContainer>
+            </StyledTaskTextDesc>
+            <StyledTaskContainer>
+              <StyledThereminContainer></StyledThereminContainer>
+            </StyledTaskContainer>
+          </Wrapper2>
         </Container>
       </StyledTask>
     </Xwrapper>

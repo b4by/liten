@@ -51,9 +51,9 @@ const StyledButton = styled.button.attrs({
   }
 `;
 
-export const Button = ({ children, className, onClick }) => {
+export const Button = ({ type, children, className, onClick }) => {
   return (
-    <SoundClick>
+    <SoundClick type={type}>
       <StyledButton className={className} onClick={onClick}>
         {children ? (
           children

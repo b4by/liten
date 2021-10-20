@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import LitenAnimationInfo3 from "../../../assets/animation/liten_info_3.json";
@@ -14,8 +15,13 @@ import {
   StyledInfoTextTablet,
   StyledInfo2Text,
 } from "./styled";
+import helloMp3 from "../../../assets/audio/hello.mp3";
 
 export const Info2 = () => {
+  const [audio] = useState(new Audio(helloMp3));
+  useEffect(() => {
+    audio.play();
+  }, []);
   const history = useHistory();
   return (
     <>

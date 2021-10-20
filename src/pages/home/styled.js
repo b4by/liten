@@ -225,6 +225,8 @@ export const StyledTextParagraph = styled.p``;
 
 export const StyledHomeButton = styled(Button)`
   margin-top: 65px;
+  width: 298px;
+  height: 59px;
   ${breakpoints.onlyTablet} {
     margin-top: 59px;
     width: 462px;
@@ -232,7 +234,7 @@ export const StyledHomeButton = styled(Button)`
   }
   ${breakpoints.onlyDesktop} {
     margin-top: 130px;
-    max-width: 742px;
+    width: 742px;
     height: 147px;
   }
 `;
