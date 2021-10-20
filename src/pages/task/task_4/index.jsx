@@ -293,7 +293,8 @@ export const Task4 = () => {
           </StyledCirclesWrapper>
           <Wrapper hidden={hidden}>
             <StyledTaskTextDescMobile
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setLoaded(true);
                 setHidden(true);
               }}
@@ -314,7 +315,8 @@ export const Task4 = () => {
               </StyledTaskDescContainer>
             </StyledTaskTextDescMobile>
             <StyledTaskTextDescTablet
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setLoaded(true);
                 setHidden(true);
               }}
@@ -334,7 +336,8 @@ export const Task4 = () => {
               </StyledTaskDescContainer>
             </StyledTaskTextDescTablet>
             <StyledTaskTextDescDesktop
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setLoaded(true);
                 setHidden(true);
               }}
