@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Redirect } from "react-router";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
 import { Home } from "./pages/home";
 import { Info } from "./pages/info";
 import { Info1 } from "./pages/info/info_1";
@@ -25,7 +23,6 @@ function App() {
   const { game } = useStore();
   return (
     <>
-      <DndProvider backend={HTML5Backend}>
         <Music />
         <Router>
           <Switch>
@@ -88,7 +85,6 @@ function App() {
             <Redirect to="/" />
           </Switch>
         </Router>
-      </DndProvider>
     </>
   );
 }

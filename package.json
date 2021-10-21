@@ -13,8 +13,7 @@
     "mobx-react": "^7.2.0",
     "normalize.css": "^8.0.1",
     "react": "^17.0.2",
-    "react-dnd": "^14.0.4",
-    "react-dnd-html5-backend": "^14.0.2",
+    "react-canvas-draw": "^1.1.1",
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.4",
     "react-gtm-module": "^2.0.11",
@@ -22,10 +21,11 @@
     "react-lottie": "^1.2.3",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "react-svg-connector": "^1.0.9",
     "react-transition-group": "^4.4.2",
     "react-xarrows": "^2.0.2",
     "styled-components": "^5.3.1",
-    "tone": "^14.7.77",
+    "tone": "13.4.9",
     "wavesurfer.js": "^5.2.0",
     "web-vitals": "^1.0.1"
   },
@@ -43,9 +43,9 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
     ],
     "development": [
       "last 1 chrome version",

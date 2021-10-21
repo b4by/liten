@@ -46,8 +46,13 @@ export const Task5 = observer(() => {
   const [playing, setPlaying] = useState({});
 
   useEffect(() => {
+    const volume = game.musicIsMuted ? 0 : 0.1;
     itemsRef.current = itemsRef.current.slice(0, tracks.length);
-  }, []);
+    if (itemsRef.current) {
+      itemsRef.current.volume = volume;
+      itemsRef.current.muted = game.musicIsMuted;
+    }
+  }, [game.musicIsMuted]);
 
   useEffect(() => {}, []);
   return (
