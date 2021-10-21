@@ -47,34 +47,16 @@ import {
   Wrapper2,
 } from "./styled";
 import Tone from "tone";
-import { useEffect, useRef, useState, useCallback, memo } from "react";
+import { useEffect, useRef, useState } from "react";
 import playIconImg from "../../../assets/img/play-icon@2x.png";
-import Xarrow, { useXarrow, Xwrapper } from "react-xarrows";
-import Draggable from "react-draggable";
+import Xarrow, { Xwrapper } from "react-xarrows";
 import throttle from "lodash.throttle";
 import { useHistory } from "react-router";
 import thereminMp3 from "../../../assets/audio/theremin.mp3";
 
-function freqFromX(coordX, width) {
-  return (coordX / width) * 250 + 250;
-}
-
-const DraggableBox = memo(({ id, item: Item }) => {
-  // const updateXarrow = useXarrow();
-  console.log("@@@@RERENDER");
+const ToneButton = ({ children, note, onMouseMove }) => {
   return (
-    <Draggable>
-      <Item
-        id={id}
-        style={{ position: "relative", zIndex: "1000", opacity: 1 }}
-      />
-    </Draggable>
-  );
-});
-
-const ToneButton = ({ children, note }) => {
-  return (
-    <div draggable={false} data-note={note}>
+    <div draggable={false} data-note={note} onMouseMove={onMouseMove}>
       {children}
     </div>
   );
@@ -84,89 +66,16 @@ const synth = new Tone.FMSynth().toMaster();
 const pitchInterpolater = new Tone.CtrlInterpolate([1200, 2500]);
 const volumeInterpolater = new Tone.CtrlInterpolate([5, -20]);
 
-export const Task4 = () => {
-  const history = useHistory();
-  const musicRef = useRef(null);
-  const container = useRef(null);
-  const [hidden, setHidden] = useState(false);
-  const [pointerNote, setPointerNote] = useState("1");
-  const [keyDrag, setKeyDrag] = useState("_drag");
-  const [show, setShow] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const [draw, redraw] = useState(0);
-
+const ContainerComponent = ({
+  children,
+  loaded,
+  pointerNote,
+  setPointerNote,
+}) => {
   const [clicked, setClicked] = useState(false);
   const [top, setTop] = useState(false);
   const [left, setLeft] = useState(false);
   const [play, setPlay] = useState(false);
-
-  useEffect(() => {
-    // TODO FINAL
-    if (pointerNote === "5") {
-      synth.triggerRelease();
-      setShow(true);
-      setLoaded(false);
-    }
-    musicRef.current.addEventListener("ended", () => {
-      setPlaying(false);
-    });
-  }, [history, pointerNote]);
-
-  const touchstart = (event) => {
-    Tone.context.resume();
-    if (container.current) {
-      let t0 = event?.touches?.item(0) ?? event;
-      let freq = freqFromX(t0.clientX, container.current.clientWidth);
-      synth.triggerAttack(freq);
-    }
-  };
-
-  const touchend = useCallback(() => {
-    synth.triggerRelease();
-    setKeyDrag(keyDrag + "_1");
-    setPointerNote("1");
-  }, [keyDrag]);
-
-  const touchmove = (event) => {
-    onGotPointerCapture(event);
-    if (container.current) {
-      let t0 = event?.touches?.item(0) ?? event;
-      let freq = freqFromX(t0.clientX, container.current.clientWidth);
-      synth.setNote(freq);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      synth.dispose();
-      pitchInterpolater.dispose();
-      volumeInterpolater.dispose();
-    };
-  }, []);
-
-  const onGotPointerCapture = useCallback(
-    (event) => {
-      let e = event?.touches?.item(0) ?? event;
-
-      let elements = document.elementsFromPoint(e.clientX, e.clientY);
-      let note = elements.find((item) => item.dataset.note);
-      if (note) {
-        if (note.dataset.note - pointerNote === 1) {
-          console.log("@@___");
-          setPointerNote(note.dataset.note);
-        }
-
-        if (note.dataset.note - pointerNote > 1) {
-          console.log("@@");
-          setPointerNote("1");
-          touchend(event);
-          return false;
-        }
-      }
-    },
-    [pointerNote, touchend]
-  );
 
   const handleMouseOut = ({ currentTarget, relatedTarget }) => {
     if (currentTarget && !currentTarget.contains(relatedTarget)) {
@@ -176,10 +85,23 @@ export const Task4 = () => {
     }
   };
 
+  const handleTouchCancel = ({ touches, changedTouches, targetTouches }) => {
+    setClicked(false);
+    setTop(0);
+    setLeft(0);
+    if (pointerNote !== 5) {
+      setPointerNote("1");
+    }
+  };
+
   const handleMouseDown = ({ currentTarget, relatedTarget }) => {
     if (currentTarget && !currentTarget.contains(relatedTarget)) {
       setClicked(true);
     }
+  };
+
+  const handleStart = () => {
+    setClicked(true);
   };
 
   const handleMouseUp = ({ currentTarget, relatedTarget }) => {
@@ -189,6 +111,13 @@ export const Task4 = () => {
     if (pointerNote !== 5) {
       setPointerNote("1");
     }
+  };
+
+  const handleEnd = () => {
+    if (pointerNote !== 5) {
+      setPointerNote("1");
+    }
+    setClicked(false);
   };
 
   const handleMouseMove = ({
@@ -216,18 +145,32 @@ export const Task4 = () => {
     }
   };
 
-  const handleMoveElem = ({ target }) => {
-    if (target) {
-      if (target.dataset.note - pointerNote === 1) {
-        console.log("@@___");
-        setPointerNote(target.dataset.note);
+  const handleMove = (e) => {
+    const { touches, } = e;
+    if (touches) {
+      let element = document.getElementById("somewrapper");
+
+      if (element) {
+        console.log(
+          (touches[0].pageX - element.offsetLeft) / element.offsetWidth
+        );
+        setLeft((touches[0].pageX - element.offsetLeft) / element.offsetWidth);
+        setTop((touches[0].pageY - element.offsetTop) / element.offsetHeight);
       }
 
-      if (target.dataset.note - pointerNote > 1) {
-        console.log("@@");
-        setPointerNote("1");
-        touchend(target);
-        return false;
+      let elements = document.elementsFromPoint(
+        touches[0].pageX,
+        touches[0].pageY
+      );
+      let note = elements.find((item) => item.dataset.note);
+      if (note) {
+        if (note.dataset.note - pointerNote === 1) {
+          setPointerNote(note.dataset.note);
+        }
+
+        if (note.dataset.note - pointerNote > 1) {
+          setPointerNote("1");
+        }
       }
     }
   };
@@ -255,17 +198,59 @@ export const Task4 = () => {
   }, [clicked, left, play, top]);
 
   return (
+    <StyledCirclesWrapper
+      onMouseOut={throttle(handleMouseOut, 100)}
+      onMouseDown={throttle(handleMouseDown, 100)}
+      onMouseUp={throttle(handleMouseUp, 100)}
+      onMouseMove={throttle(handleMouseMove, 100)}
+      onDragStart={(e) => e.preventDefault()}
+      loaded={loaded}
+      onTouchCancel={throttle(handleTouchCancel, 100)}
+      onTouchStart={throttle(handleStart, 100)}
+      onTouchEnd={throttle(handleEnd, 100)}
+      onTouchMove={throttle(handleMove, 100)}
+      id="somewrapper"
+    >
+      {children}
+    </StyledCirclesWrapper>
+  );
+};
+
+export const Task4 = () => {
+  const history = useHistory();
+  const musicRef = useRef(null);
+  const [hidden, setHidden] = useState(false);
+  const [pointerNote, setPointerNote] = useState("1");
+  const [show, setShow] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    // TODO FINAL
+    if (pointerNote === "5") {
+      setShow(true);
+      setLoaded(false);
+    }
+  }, [history, pointerNote]);
+
+  useEffect(() => {
+    return () => {
+      synth.dispose();
+      pitchInterpolater.dispose();
+      volumeInterpolater.dispose();
+    };
+  }, []);
+
+  return (
     <Xwrapper>
       <StyledTask>
         <StyledTaskCursorCircle />
-        <Container
-          onMouseOut={throttle(handleMouseOut, 100)}
-          onMouseDown={throttle(handleMouseDown, 100)}
-          onMouseUp={throttle(handleMouseUp, 100)}
-          onMouseMove={throttle(handleMouseMove, 100)}
-          onDragStart={(e) => e.preventDefault()}
-        >
-          <StyledCirclesWrapper loaded={loaded} ref={container}>
+        <Container>
+          <ContainerComponent
+            loaded={loaded}
+            pointerNote={pointerNote}
+            setPointerNote={setPointerNote}
+          >
             <StyledCircles1 />
             <StyledCircles2 />
             <StyledCircles3 />
@@ -275,7 +260,6 @@ export const Task4 = () => {
               note={1}
               pointerNote={pointerNote}
               setPointerNote={setPointerNote}
-              onMouseMove={handleMoveElem}
             >
               <WrapperPlay1 draggable={false}>
                 <StyledTaskPlayIconImg1
@@ -289,7 +273,6 @@ export const Task4 = () => {
               note={2}
               pointerNote={pointerNote}
               setPointerNote={setPointerNote}
-              onMouseMove={handleMoveElem}
             >
               <WrapperPlay2 draggable={false}>
                 <StyledTaskPlayIconImg2
@@ -303,7 +286,6 @@ export const Task4 = () => {
               note={3}
               pointerNote={pointerNote}
               setPointerNote={setPointerNote}
-              onMouseMove={handleMoveElem}
             >
               <WrapperPlay3 draggable={false}>
                 <StyledTaskPlayIconImg3
@@ -317,7 +299,6 @@ export const Task4 = () => {
               note={4}
               pointerNote={pointerNote}
               setPointerNote={setPointerNote}
-              onMouseMove={handleMoveElem}
             >
               <WrapperPlay4 draggable={false}>
                 <StyledTaskPlayIconImg4
@@ -331,7 +312,6 @@ export const Task4 = () => {
               note={5}
               pointerNote={pointerNote}
               setPointerNote={setPointerNote}
-              onMouseMove={handleMoveElem}
             >
               <WrapperPlay5 draggable={false}>
                 <StyledTaskPlayIconImg5
@@ -394,7 +374,7 @@ export const Task4 = () => {
               <div className="notebar" data-note="A"></div>
               <div className="notebar" data-note="B"></div>
             </div>
-          </StyledCirclesWrapper>
+          </ContainerComponent>
           <Wrapper hidden={hidden}>
             <StyledTaskTextDescMobile
               onClick={(e) => {
