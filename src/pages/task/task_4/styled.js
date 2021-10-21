@@ -118,7 +118,6 @@ export const StyledTask = styled.div`
 `;
 
 export const StyledCirclesWrapper = styled.div`
-  pointer-events: ${({ loaded }) => (loaded ? "auto" : "none")};
   position: relative;
   overflow: hidden;
   width: 360px;
@@ -223,7 +222,6 @@ export const StyledCircles5 = styled.div`
   background-repeat: no-repeat;
   background-position: 10px -30px;
   background-size: contain;
-  pointer-events: none;
   z-index: 10;
 
   ${breakpoints.onlyTablet} {
