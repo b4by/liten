@@ -181,6 +181,7 @@ const ContainerComponent = ({
     const pitch = pitchInterpolater.value;
     const volume = volumeInterpolater.value;
 
+    console.log(left, top)
     if (play) {
       synth.volume.value = volume;
       synth.setNote(pitch);
