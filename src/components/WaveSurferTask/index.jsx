@@ -30,6 +30,9 @@ export const WaveSurferTask = observer(({ url, id, checked, setChecked }) => {
   const { game } = useStore();
 
   useEffect(() => {
+    if (id !== checked) {
+      setPlaying(false);
+    }
     const volume = game.musicIsMuted ? 0 : 0.1;
     game.playOrPause(false);
 
@@ -49,7 +52,7 @@ export const WaveSurferTask = observer(({ url, id, checked, setChecked }) => {
     });
 
     return () => wavesurfer.current.destroy();
-  }, [url, game.musicIsMuted]);
+  }, [url, game.musicIsMuted, id, checked]);
 
   return (
     <StyleWaveSurferContainer>

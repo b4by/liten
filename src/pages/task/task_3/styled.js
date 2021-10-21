@@ -1,9 +1,18 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import checkboxBlankImg from "../../../assets/img/checkbox--blank.png";
 import checkboxActiveImg from "../../../assets/img/checkbox--active.png";
 import { breakpoints } from "../../../helpers/breakpoints";
 import { Button } from "../../../components/UI/button";
 import bubbleArrowSvg from "../../../assets/svg/bubble-arrow.svg";
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
 
 export const StyledTaskBg = styled.div`
   position: absolute;
@@ -36,7 +45,7 @@ export const StyledTaskContent = styled.div`
     padding-top: 101px;
   }
   ${breakpoints.onlyDesktop} {
-    padding-top: 148px;
+    padding-top: 112px;
   }
 `;
 
@@ -69,10 +78,15 @@ export const StyledTaskList = styled.ul`
 `;
 
 export const StyledTaskListItem = styled.li`
-  display: flex;
+  display: ${(props) => (props.hidden ? "none" : "flex")};
   justify-content: space-between;
   align-items: center;
   position: relative;
+  ${(props) =>
+    props.hidden &&
+    css`
+      animation: fadeOut ease 0.26;
+    `}
 `;
 
 export const StyledTaskQuestion = styled.h3`

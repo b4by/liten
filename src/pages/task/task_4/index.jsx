@@ -328,7 +328,7 @@ export const Task4 = () => {
                 strokeWidth="2"
                 color="#fff"
                 showHead={false}
-                path="straight"
+                path="smooth"
                 draggable={false}
               />
             )}
@@ -339,7 +339,7 @@ export const Task4 = () => {
                 strokeWidth="2"
                 color="#fff"
                 showHead={false}
-                path="straight"
+                path="smooth"
                 draggable={false}
               />
             )}
@@ -350,7 +350,7 @@ export const Task4 = () => {
                 strokeWidth="2"
                 color="#fff"
                 showHead={false}
-                path="straight"
+                path="smooth"
                 draggable={false}
               />
             )}
@@ -361,7 +361,7 @@ export const Task4 = () => {
                 strokeWidth="2"
                 color="#fff"
                 showHead={false}
-                path="straight"
+                path="smooth"
                 draggable={false}
               />
             )}

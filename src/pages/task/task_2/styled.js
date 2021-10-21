@@ -9,7 +9,7 @@ export const StyledTaskContainer = styled.div`
     padding-top: 108px;
   }
   ${breakpoints.onlyDesktop} {
-    padding-top: 115px;
+    padding-top: 49px;
   }
 `;
 export const StyledTaskTextDesc = styled.div`
@@ -338,10 +338,16 @@ export const StyledTaskButton = styled(Button)`
   letter-spacing: 0.08em;
   height: 48px;
   ${breakpoints.onlyTablet} {
+    position: absolute;
+    top: 0;
+    left: 0;
     grid-area: button;
     width: 435px;
   }
   ${breakpoints.onlyDesktop} {
+    position: absolute;
+    top: 0;
+    left: 0;
     grid-area: button;
     font-size: 50px;
     height: 90px;

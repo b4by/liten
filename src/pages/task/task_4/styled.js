@@ -118,7 +118,6 @@ export const StyledTask = styled.div`
 `;
 
 export const StyledCirclesWrapper = styled.div`
-  pointer-events: ${({ loaded }) => (loaded ? "auto" : "none")};
   position: relative;
   overflow: hidden;
   width: 360px;
@@ -223,7 +222,6 @@ export const StyledCircles5 = styled.div`
   background-repeat: no-repeat;
   background-position: 10px -30px;
   background-size: contain;
-  pointer-events: none;
   z-index: 10;
 
   ${breakpoints.onlyTablet} {
@@ -273,7 +271,7 @@ export const StyledTaskTextDescMobile = styled.div`
     align-items: center;
   }
   ${breakpoints.onlyMobile} {
-    display: flex;
+    display: none;
   }
   ${breakpoints.onlyTablet} {
     display: none;
@@ -299,6 +297,7 @@ export const StyledTaskTextDescTablet = styled.div`
   width: 100%;
   height: 100%;
   z-index: 20;
+  user-select: none;
   display: flex;
   justify-content: center;
   p:first-of-type {
@@ -309,7 +308,7 @@ export const StyledTaskTextDescTablet = styled.div`
     display: none;
   }
   ${breakpoints.onlyTablet} {
-    display: flex;
+    display: none;
   }
   ${breakpoints.onlyDesktop} {
     display: none;
@@ -318,7 +317,7 @@ export const StyledTaskTextDescTablet = styled.div`
 
 export const StyledTaskTextDescDesktop = styled.div`
   padding: 0 16px;
-  padding-top: 380px;
+  padding-top: 253px;
   position: absolute;
   top: 0;
   left: 0;
@@ -345,7 +344,7 @@ export const StyledTaskTextDescDesktop = styled.div`
     display: none;
   }
   ${breakpoints.onlyDesktop} {
-    display: flex;
+    display: none;
   }
 `;
 
@@ -436,6 +435,9 @@ export const StyledTaskDescButtonMobile = styled(Button)`
   background: transparent;
   font-weight: bold;
   margin-top: 88px;
+  &:hover {
+    background: transparent;
+  }
   ${breakpoints.onlyMobile} {
     display: block;
   }
@@ -458,6 +460,9 @@ export const StyledTaskDescButtonTablet = styled(Button)`
   padding: 6px 0;
   border: 5px solid #ffffff;
   background: transparent;
+  &:hover {
+    background: transparent;
+  }
   ${breakpoints.onlyMobile} {
     display: none;
   }
@@ -479,6 +484,9 @@ export const StyledTaskDescButtonDesktop = styled(Button)`
   font-size: 40px;
   line-height: 112.63%;
   background: transparent;
+  &:hover {
+    background: transparent;
+  }
   ${breakpoints.onlyMobile} {
     display: none;
   }

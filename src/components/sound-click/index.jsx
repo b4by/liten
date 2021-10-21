@@ -32,7 +32,7 @@ export const SoundClick = observer(({ type, children }) => {
       musicRef.current.volume = volume;
       musicRef.current.muted = game.musicIsMuted;
     }
-  });
+  }, [game.musicIsMuted]);
 
   return (
     <div

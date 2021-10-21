@@ -18,10 +18,14 @@ import {
 
 export const Task3 = () => {
   const { game } = useStore();
+  const [tasks, setTasks] = useState([...game.task3]);
   const [checked, setChecked] = useState(false);
+  const [hidden, setHidden] = useState([]);
   const history = useHistory();
 
-  useEffect(() => {}, [checked]);
+  useEffect(() => {
+    console.log(tasks);
+  }, [checked, tasks]);
   return (
     <>
       <StyledTaskBg />
@@ -37,14 +41,25 @@ export const Task3 = () => {
             музыка?
           </StyledTaskTitle>
           <StyledTaskList>
-            {game.task3.map((item) => {
+            {tasks?.map((item) => {
               return (
-                <StyledTaskListItem key={item.id}>
+                <StyledTaskListItem
+                  key={item.id}
+                  hidden={tasks[item.id].hidden}
+                >
                   <StyledTaskQuestion>{item.title}</StyledTaskQuestion>
                   <StyledTaskCheckbox
                     checked={checked.checkedId === item.id}
                     onClick={() => {
+                      let newTasks = [...tasks];
                       setChecked({ ...checked, checkedId: item.id });
+                      setTimeout(() => {
+                        if (item.id === 3) {
+                          return;
+                        }
+                        newTasks.find((el) => el.id === item.id).hidden = true;
+                        setTasks([...newTasks]);
+                      }, 5000);
                     }}
                   />
                   <StyledTaskDescription show={checked.checkedId === item.id}>

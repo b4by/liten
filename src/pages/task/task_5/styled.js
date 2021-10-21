@@ -61,7 +61,7 @@ export const StyledTaskContent = styled.div`
     padding-top: 148px;
   }
   ${breakpoints.onlyDesktop} {
-    padding-top: 169px;
+    padding-top: 135px;
   }
 `;
 
